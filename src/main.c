@@ -208,7 +208,7 @@ void TIM4_IRQHandler(void)
 {
 	if(TIM_GetITStatus(TIM4,TIM_IT_Update)!=RESET)
 	{
-		LCD_GLASS_DisplayString((uint8_t*)" TROYANO ");
+		LCD_GLASS_DisplayString((uint8_t*)" fin ");
 		TIM_ClearITPendingBit(TIM4,TIM_IT_Update);
 	}
 }
