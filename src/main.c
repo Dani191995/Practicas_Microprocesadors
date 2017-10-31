@@ -159,12 +159,6 @@ void Configuracion_Interrupcion(void)
 	Configuracion_EXTI.EXTI_LineCmd= ENABLE;
 	EXTI_Init(&Configuracion_EXTI);
 
-	//CONFIGURACION DE LA INTERRUPCION DEL TIMER
-	Configuracion_EXTI.EXTI_Line= TIM4_IRQn;
-	Configuracion_EXTI.EXTI_Mode=EXTI_Mode_Interrupt;
-	Configuracion_EXTI.EXTI_Trigger= EXTI_Trigger_Rising;
-	Configuracion_EXTI.EXTI_LineCmd= ENABLE;
-	EXTI_Init(&Configuracion_EXTI);
 
 	//HABILITAMOS LA INTERRUPCION Y DEFINIMOS LA INTERRUPCION GPIO_PIN_0 COMO BAJA PRIPORIDAD
 	NVIC_InitTypeDef Configuracion_NVIC;
@@ -181,6 +175,9 @@ void Configuracion_Interrupcion(void)
 	Configuracion_NVIC.NVIC_IRQChannelPreemptionPriority= 0X0E;
 	Configuracion_NVIC.NVIC_IRQChannelSubPriority=0x0f;
 	NVIC_Init(&Configuracion_NVIC);
+
+	TIM_ITConfig(TIM4,TIM_IT_Update,ENABLE);
+	TIM_Cmd(TIM4, ENABLE);
 }
 void Configuracion_Timer(void)
 {
