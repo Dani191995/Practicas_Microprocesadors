@@ -1,6 +1,6 @@
-#include "Configuration.h"
+#include "GPIOs.h"
 
-void  Init_GPIOs ()
+void  GPIOs_Configuration ()
 {
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA|RCC_AHBPeriph_GPIOB|RCC_AHBPeriph_GPIOC|RCC_AHBPeriph_GPIOD, ENABLE);
   GPIO_InitTypeDef GPIO_InitStructure;
@@ -73,5 +73,8 @@ void  Init_GPIOs ()
   GPIO_PinAFConfig(GPIOC, GPIO_PinSource10,GPIO_AF_LCD) ;
   GPIO_PinAFConfig(GPIOC, GPIO_PinSource11,GPIO_AF_LCD) ;
 }
+
+
+
 
 
