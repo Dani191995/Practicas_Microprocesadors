@@ -1,7 +1,4 @@
 //INCLUIMOS LAS LIBRERIAS QUE VAMOS A UTILIZAR---------
-//#include "stm32l1xx.h"
-
-//#include "stm32l1xx_tim.h"
 #include "GPIOs.h"
 #include "Timers.h"
 #include "Interruptions.h"
