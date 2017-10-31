@@ -199,7 +199,7 @@ void EXTI0_IRQHandler(void)		//RUTINA DE ATENCION A LA INTERRUPCION O RAI
 {
 	if(EXTI_GetFlagStatus(EXTI_Line0)){
 		  LCD_GLASS_Clear();
-		  LCD_GLASS_DisplayString((uint8_t*)"	LIBEG ");
+		  LCD_GLASS_DisplayString((uint8_t*)"	LIBEGTO ");
 		  EXTI_ClearITPendingBit(EXTI_Line0);
 	    }
 }
