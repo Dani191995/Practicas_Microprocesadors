@@ -20,15 +20,6 @@ void  GPIOs_Configuration ()
     	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
     	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
     	GPIO_Init(GPIOA, &GPIO_InitStructure);
-
-    	/* Configure PA11 (Button) como input */
-    		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
-    		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
-    		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-    		GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-    		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
-    		GPIO_Init(GPIOA, &GPIO_InitStructure);
-
     //-----------------------------------------------
 
    //CONFIGURACION DEL LED COMO SALIDA--------------------------

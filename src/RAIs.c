@@ -7,7 +7,6 @@ void TIM4_IRQHandler()
 		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
 		TIM_ClearITPendingBit(TIM4, TIM_IT_CC1 );
 		TIM_ClearITPendingBit( TIM4, TIM_IT_CC2);
-		TIM_ClearITPendingBit( TIM4, TIM_IT_CC3);
 	 }
 //CUANDO LLEGA AL FINAL DE LA CUENTA ENTRA EN AL INTERRUPCION
 	 if (TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)
@@ -21,14 +20,13 @@ void TIM4_IRQHandler()
 	 /* TIM4_TIC_CH1 */
 	 	if (TIM_GetITStatus(TIM4, TIM_IT_CC1) != RESET)
 	 	{
-	 		/* Clear TIM4 Capture compare interrupt pending bit */
-	 		TIM_ClearITPendingBit(TIM4, TIM_IT_CC1);
-	 		/* Get the Input Capture value */
-	 		tiempo = TIM_GetCapture1(TIM4); //IC -Capturamos el conteo
-	 		//Convertimos a tiempo
-	 		DisplayTimeOnLCD(tiempo);
+	 			/* Clear TIM4 Capture compare interrupt pending bit */
+	 				 		TIM_ClearITPendingBit(TIM4, TIM_IT_CC1);
+	 				 		/* Get the Input Capture value */
+	 				 		tiempo = TIM_GetCapture1(TIM4); //IC -Capturamos el conteo
+	 				 		//Convertimos a tiempo
+	 				 		DisplayTimeOnLCD(tiempo);
 	 	}
-
 	 	/* TIM4_TOC_CH2 */
 	 	if (TIM_GetITStatus(TIM4, TIM_IT_CC2) != RESET)
 	 	{
@@ -36,24 +34,17 @@ void TIM4_IRQHandler()
 	 		GPIO_WriteBit(GPIOB,GPIO_Pin_7, (BitAction)(1 - GPIO_ReadOutputDataBit(GPIOB,GPIO_Pin_7)));
 	 		capture = TIM_GetCapture2(TIM4);
 	 		TIM_SetCompare2(TIM4, capture + 500);//añadimos 0.5s mas para que haga el parpadeo
-	 	}
 
-	 	/* TIM4_TIC_CH3 */
-	 	if (TIM_GetITStatus(TIM4, TIM_IT_CC3) != RESET)
-	 	{
-	 		//iniciamos el timer
-	 		//TIM_Cmd(TIM4, ENABLE);
-	 		//LCD_GLASS_DisplayString((uint8_t*)"ON");
-	 		//limpiamos el flag
-	 		TIM_ClearITPendingBit(TIM4, TIM_IT_CC3);
-	 		LCD_GLASS_DisplayString((uint8_t*)" 11 ");
+
 	 	}
 }
 void EXTI0_IRQHandler (void){                  // Rutina de Atencion a la Interrupcion
+
 	if(EXTI_GetFlagStatus(EXTI_Line0)!=0){
 	LCD_GLASS_DisplayString((uint8_t*)" START ");
 	TIM_Cmd(TIM4, ENABLE);
 	EXTI_ClearITPendingBit(EXTI_Line0);                // Limpiamos el flag
+
 	}
 }
 

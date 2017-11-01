@@ -57,20 +57,11 @@ void Timer_Configuration()
  	TIM_OC2Init(TIM4, &TIM_OCInitStructure);
  	TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Disable);
 
-//CANAL 3 PULSADOR 11
- 	TIM_ICInitStructure.TIM_Channel = TIM_Channel_3;
- 	TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Falling;
- 	TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
- 	TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
- 	TIM_ICInitStructure.TIM_ICFilter = 0x0;
- 	TIM_ICInit(TIM4, &TIM_ICInitStructure);
-
  	/* TIM IT enable */
 
  	TIM_ITConfig(TIM4, TIM_IT_Update, ENABLE); //Update Event
  	TIM_ITConfig(TIM4, TIM_IT_CC1 , ENABLE); //IC1 asociado a PA12
  	TIM_ITConfig(TIM4, TIM_IT_CC2 , ENABLE); //OC2 asociado a PB7
- 	TIM_ITConfig(TIM4, TIM_IT_CC3, ENABLE); //IC3 asociado a PA11
  }
 
 void Systick_Configuration()
