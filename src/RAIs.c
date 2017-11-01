@@ -21,28 +21,28 @@ void TIM4_IRQHandler()
 	 	if (TIM_GetITStatus(TIM4, TIM_IT_CC1) != RESET)
 	 	{
 	 			/* Clear TIM4 Capture compare interrupt pending bit */
-	 				 		TIM_ClearITPendingBit(TIM4, TIM_IT_CC1);
-	 				 		/* Get the Input Capture value */
-	 				 		tiempo = TIM_GetCapture1(TIM4); //IC -Capturamos el conteo
-	 				 		//Convertimos a tiempo
-	 				 		DisplayTimeOnLCD(tiempo);
+	 	TIM_ClearITPendingBit(TIM4, TIM_IT_CC1);
+	 	/* Get the Input Capture value */
+	 	tiempo = TIM_GetCapture1(TIM4); //IC -Capturamos el conteo
+	 	//Convertimos a tiempo
+	 	DisplayTimeOnLCD(tiempo);
 	 	}
 	 	/* TIM4_TOC_CH2 */
-	 	if (TIM_GetITStatus(TIM4, TIM_IT_CC2) != RESET)
-	 	{
-	 		TIM_ClearITPendingBit(TIM4, TIM_IT_CC2);
-	 		GPIO_WriteBit(GPIOB,GPIO_Pin_7, (BitAction)(1 - GPIO_ReadOutputDataBit(GPIOB,GPIO_Pin_7)));
-	 		capture = TIM_GetCapture2(TIM4);
-	 		TIM_SetCompare2(TIM4, capture + 500);//añadimos 0.5s mas para que haga el parpadeo
-
-
-	 	}
+		if (TIM_GetITStatus(TIM4, TIM_IT_CC2) != RESET)
+		 	 {
+		 	 TIM_ClearITPendingBit(TIM4, TIM_IT_CC2);
+		 	 GPIO_WriteBit(GPIOB,GPIO_Pin_7, (BitAction)(1 - GPIO_ReadOutputDataBit(GPIOB,GPIO_Pin_7)));
+		 	 capture = TIM_GetCapture2(TIM4);
+		 	 TIM_SetCompare2(TIM4, capture + 500);
+		 	 }
 }
 void EXTI0_IRQHandler (void){                  // Rutina de Atencion a la Interrupcion
 
 	if(EXTI_GetFlagStatus(EXTI_Line0)!=0){
+	//GPIO_ResetBits(GPIOB,GPIO_Pin_7);
 	LCD_GLASS_DisplayString((uint8_t*)" START ");
 	TIM_Cmd(TIM4, ENABLE);
+
 	EXTI_ClearITPendingBit(EXTI_Line0);                // Limpiamos el flag
 
 	}
