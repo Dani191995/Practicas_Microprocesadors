@@ -17,7 +17,7 @@ int main(void)
 
   LCD_GLASS_Init();					//INICIALIZAMOS LA PANTALLA
   LCD_GLASS_Clear();				//LIMPIAMOS LA PANTALLA
-  LCD_GLASS_ScrollSentence((uint8_t*)" ** P2 TIMERS ** ",1,200);	//MOSTRAMOS UN SCROLL CON EL MESAJE INDICADO
+  LCD_GLASS_ScrollSentence((uint8_t*)" *** P2 TIMERS *** ",1,200);	//MOSTRAMOS UN SCROLL CON EL MESAJE INDICADO
   LCD_GLASS_Clear();
   LCD_GLASS_DisplayString((uint8_t*)" PULSE");				//MOSTRAMOS UN MENSAJE DE PULSE
 
