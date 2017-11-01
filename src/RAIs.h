@@ -4,8 +4,10 @@
 #define RAIS_H_
 
  bool inicio = TRUE;
-
+uint16_t tiempo;
+uint32_t capture;
 void EXTI0_IRQHandler(void);
 void TIM4_IRQHandler(void);
+void DisplayTimeOnLCD(uint16_t tiempo);
 
 #endif /* RAIS_H_ */

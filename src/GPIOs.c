@@ -13,14 +13,56 @@ void  GPIOs_Configuration ()
   GPIO_Init(GPIOA, &GPIO_InitStructure);
 
   //-----------------------------------------------
+  /* Configure PA12 (Button) como input */
+    	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
+    	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+    	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+    	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+    	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
+    	GPIO_Init(GPIOA, &GPIO_InitStructure);
 
- //CONFIGURACION DEL LED COMO SALIDA--------------------------
- GPIO_InitStructure.GPIO_Pin=GPIO_Pin_6;
- GPIO_InitStructure.GPIO_Mode= GPIO_Mode_OUT;
- GPIO_InitStructure.GPIO_PuPd= GPIO_PuPd_NOPULL;
- GPIO_InitStructure.GPIO_OType=GPIO_OType_PP;
- GPIO_InitStructure.GPIO_Speed=GPIO_Speed_2MHz;
- GPIO_Init(GPIOD, & GPIO_InitStructure);
+    	/* Configure PA11 (Button) como input */
+    		GPIO_InitStructure.GPIO_Pin = GPIO_Pin_11;
+    		GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+    		GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+    		GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+    		GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
+    		GPIO_Init(GPIOA, &GPIO_InitStructure);
+
+    //-----------------------------------------------
+
+   //CONFIGURACION DEL LED COMO SALIDA--------------------------
+   GPIO_InitStructure.GPIO_Pin=GPIO_Pin_7;
+   GPIO_InitStructure.GPIO_Mode= GPIO_Mode_AF;
+   GPIO_InitStructure.GPIO_PuPd= GPIO_PuPd_UP;
+   GPIO_InitStructure.GPIO_OType=GPIO_OType_PP;
+   GPIO_InitStructure.GPIO_Speed=GPIO_Speed_40MHz;
+   GPIO_Init(GPIOD, & GPIO_InitStructure);
+
+   GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_TIM4);
+
+   //1-Definir puerto 2- Conectarlo al RI 3- conectar el RI al Timer
+  	GPIO_PinAFConfig(GPIOA, GPIO_PinSource12, GPIO_AF_RI);
+   /* Seleccionamos TIM4 dentro del RI*/
+  	SYSCFG_RITIMSelect(TIM_Select_TIM4);
+
+   /* Input Capture CH1 se mapea hacia RI */
+   /*OJO hay que buscar en el manual/153 y comprobar que se pueda routear al ch1*/
+  	SYSCFG_RITIMInputCaptureConfig(RI_InputCapture_IC1, RI_InputCaptureRouting_3);
+
+   /*usamos AF para el PB7 (LED verde) que puede ser conectado al CH2 del TIM4*/
+  	GPIO_PinAFConfig(GPIOB, GPIO_PinSource7,GPIO_AF_TIM4);
+
+   /* Redirigimos PA11 al Routing Interface */
+  	GPIO_PinAFConfig(GPIOA, GPIO_PinSource11, GPIO_AF_RI);
+
+   /* Seleccionamos TIM4 dentro del RI*/
+   	SYSCFG_RITIMSelect(TIM_Select_TIM4);
+
+   /* Input Capture CH1 se mapea hacia RI */
+   	SYSCFG_RITIMInputCaptureConfig(RI_InputCapture_IC3, RI_InputCaptureRouting_2);
+
+
 
   //-----------------------------------------------------------
 //CONFIGURACION DE LA SALIDA POR LA PANTALA LCD
@@ -42,8 +84,9 @@ void  GPIOs_Configuration ()
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_4 | GPIO_Pin_5 | GPIO_Pin_8 | GPIO_Pin_9 \
                                  | GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_13 | GPIO_Pin_14 | GPIO_Pin_15;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  GPIO_Init( GPIOB, &GPIO_InitStructure);
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
 
+  GPIO_PinAFConfig(GPIOB, GPIO_PinSource3,GPIO_AF_LCD) ;
   GPIO_PinAFConfig(GPIOB, GPIO_PinSource4,GPIO_AF_LCD) ;
   GPIO_PinAFConfig(GPIOB, GPIO_PinSource5,GPIO_AF_LCD) ;
   GPIO_PinAFConfig(GPIOB, GPIO_PinSource8,GPIO_AF_LCD) ;
