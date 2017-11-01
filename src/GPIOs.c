@@ -5,24 +5,23 @@ void  GPIOs_Configuration ()
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA|RCC_AHBPeriph_GPIOB|RCC_AHBPeriph_GPIOC|RCC_AHBPeriph_GPIOD, ENABLE);
   GPIO_InitTypeDef GPIO_InitStructure;
 
-  //CONFIGURACION DEL BOTON USER-------------------
+//CONFIGURACION DEL BOTON USER-------------------
   GPIO_InitStructure.GPIO_Pin= GPIO_Pin_0;			//PIN 0 (BOTON USER)
   GPIO_InitStructure.GPIO_Mode= GPIO_Mode_IN;		//MODO ENTRADA
   GPIO_InitStructure.GPIO_PuPd= GPIO_PuPd_NOPULL;	//NO HACE FALTA RESISTENCIA(INTEGRADA)
   GPIO_InitStructure.GPIO_Speed=GPIO_Speed_2MHz;	//VELOCIDAD
   GPIO_Init(GPIOA, &GPIO_InitStructure);
-
-  //-----------------------------------------------
-  /* Configure PA12 (Button) como input */
+//--------------------------------------------------------
+//CONFIGURAMOS EL PIN 12 COMO ENTRADA
     	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
     	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
     	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
     	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
     	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
     	GPIO_Init(GPIOA, &GPIO_InitStructure);
-    //-----------------------------------------------
+//----------------------------------------------------------
 
-   //CONFIGURACION DEL LED COMO SALIDA--------------------------
+//CONFIGURACION DEL LED COMO SALIDA-------------------------------
     	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
     	 GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
     	 GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
@@ -30,20 +29,19 @@ void  GPIOs_Configuration ()
     	 GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
     	 GPIO_Init(GPIOB, &GPIO_InitStructure);
     	 GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_TIM4);
+//-------------------------------------------------------------------
+//CONFIGURAMOS LOS CANALES DEL TIMER ASIGNANCO LOS PUERTOS CITADOS ANTERIORMENTE A LOS CANALES DE ESTE--------------
 
-   //1-Definir puerto 2- Conectarlo al RI 3- conectar el RI al Timer
+//1-Definir puerto 2- Conectarlo al RI 3- conectar el RI al Timer
   	GPIO_PinAFConfig(GPIOA, GPIO_PinSource12, GPIO_AF_RI);
-   /* Seleccionamos TIM4 dentro del RI*/
+// Seleccionamos TIM4 dentro del RI
   	SYSCFG_RITIMSelect(TIM_Select_TIM4);
-
-   /* Input Capture CH1 se mapea hacia RI */
-   /*OJO hay que buscar en el manual/153 y comprobar que se pueda routear al ch1*/
+//Input Capture CH1 se mapea hacia RI
   	SYSCFG_RITIMInputCaptureConfig(RI_InputCapture_IC1, RI_InputCaptureRouting_3);
-
-   /*usamos AF para el PB7 (LED verde) que puede ser conectado al CH2 del TIM4*/
+//usamos AF para el PB7 (LED verde) que puede ser conectado al CH2 del TIM4
   	 GPIO_PinAFConfig(GPIOB, GPIO_PinSource7,GPIO_AF_TIM4);
+//-------------------------------------------------------------------------------------------------------------------
 
-  //-----------------------------------------------------------
 //CONFIGURACION DE LA SALIDA POR LA PANTALA LCD
 
 //PUERTO A

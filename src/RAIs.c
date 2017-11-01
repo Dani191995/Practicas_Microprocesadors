@@ -1,7 +1,7 @@
 #include "RAIs.h"
 void TIM4_IRQHandler()
 {
-	if (inicio == TRUE)
+	if (inicio == TRUE)	//LIMPIAMOS LOS FLAG DE TODAS LAS INTERRUPCIONES
 	 {
 		inicio = FALSE;
 		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
@@ -9,7 +9,7 @@ void TIM4_IRQHandler()
 		TIM_ClearITPendingBit( TIM4, TIM_IT_CC2);
 	 }
 //CUANDO LLEGA AL FINAL DE LA CUENTA ENTRA EN AL INTERRUPCION
-	 if (TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)
+	 if (TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)	//EN EL CASO DE QUE LLEGUE A 15S SALTA LA SIGUIENTE INTERRUPCION
 		 {
 			 LCD_GLASS_DisplayString((uint8_t*)"FIN T");
 			 TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
@@ -18,9 +18,9 @@ void TIM4_IRQHandler()
 			 tiempo=0;
 		 }
 	 /* TIM4_TIC_CH1 */
-	 	if (TIM_GetITStatus(TIM4, TIM_IT_CC1) != RESET)
+	 	if (TIM_GetITStatus(TIM4, TIM_IT_CC1) != RESET)	//EN EL CASO DE PULSAR EL BOTON 12 CAPTURAMOS EL TIEMPO Y LO MOSTRAMOS POR PANTALLA
 	 	{
-	 			/* Clear TIM4 Capture compare interrupt pending bit */
+	 	/* Clear TIM4 Capture compare interrupt pending bit */
 	 	TIM_ClearITPendingBit(TIM4, TIM_IT_CC1);
 	 	/* Get the Input Capture value */
 	 	tiempo = TIM_GetCapture1(TIM4); //IC -Capturamos el conteo
@@ -28,27 +28,25 @@ void TIM4_IRQHandler()
 	 	DisplayTimeOnLCD(tiempo);
 	 	}
 	 	/* TIM4_TOC_CH2 */
-		if (TIM_GetITStatus(TIM4, TIM_IT_CC2) != RESET)
+		if (TIM_GetITStatus(TIM4, TIM_IT_CC2) != RESET)	//ESTE CANAL ESTA ASOCIADO AL LED 6 Y SALTA CUANDO LLEGA A 10S(SE PUEDE CAMBIAR EN TIMERS.C)
 		 	 {
 		 	 TIM_ClearITPendingBit(TIM4, TIM_IT_CC2);
 		 	 GPIO_WriteBit(GPIOB,GPIO_Pin_7, (BitAction)(1 - GPIO_ReadOutputDataBit(GPIOB,GPIO_Pin_7)));
 		 	 capture = TIM_GetCapture2(TIM4);
 		 	 TIM_SetCompare2(TIM4, capture + 500);
+
 		 	 }
 }
-void EXTI0_IRQHandler (void){                  // Rutina de Atencion a la Interrupcion
+void EXTI0_IRQHandler (void){ //CUANDO PULSAMOS USER SALTA A LA SIGUIENTE INTERRUPCION
 
 	if(EXTI_GetFlagStatus(EXTI_Line0)!=0){
-	//GPIO_ResetBits(GPIOB,GPIO_Pin_7);
-	LCD_GLASS_DisplayString((uint8_t*)" START ");
-	TIM_Cmd(TIM4, ENABLE);
-
-	EXTI_ClearITPendingBit(EXTI_Line0);                // Limpiamos el flag
-
+		LCD_GLASS_DisplayString((uint8_t*)" START ");
+		TIM_Cmd(TIM4, ENABLE);	//COMIENZA A CONTAR EL TIMER
+		EXTI_ClearITPendingBit(EXTI_Line0);	// LIMPIAMOS EL FLAG
 	}
 }
 
-void DisplayTimeOnLCD(uint16_t tiempo)
+void DisplayTimeOnLCD(uint16_t tiempo)	//FUNCION PARA MOSTRAR POR PANTALLA EL TIEMPO QUE HA TRANSCURRIDO CUANDO PULSAMOS EL BOTON 12
 {
 	char cad[]="";
 	uint8_t decena,unidad,decimal1,decimal2,decimal3;

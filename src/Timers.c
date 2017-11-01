@@ -1,7 +1,7 @@
 #include "Timers.h"
 
 
-void RCC_Configuration()
+void RCC_Configuration()	//CONFIGURAMOS LOS DIFERENTES RELOJES
 {
   /* Enable the GPIOs Clock */
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC| RCC_AHBPeriph_GPIOD| RCC_AHBPeriph_GPIOE| RCC_AHBPeriph_GPIOH, ENABLE);
@@ -30,10 +30,10 @@ void RCC_Configuration()
   RCC_RTCCLKConfig(RCC_RTCCLKSource_LSE);
 }
 
-void Timer_Configuration()
+void Timer_Configuration()	//CONFIGURACION DEL TIMER 4
  {
  TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
- TIM_TimeBaseStructure.TIM_Period = 15000; //20000 x 1ms = 20s
+ TIM_TimeBaseStructure.TIM_Period = 15000; //15000 x 1ms = 15s
  TIM_TimeBaseStructure.TIM_Prescaler = 15999; //15999
  TIM_TimeBaseStructure.TIM_ClockDivision = 0;
  TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
@@ -48,16 +48,14 @@ void Timer_Configuration()
  	TIM_ICInitStructure.TIM_ICFilter = 0x0;
  	TIM_ICInit(TIM4, &TIM_ICInitStructure);
 
-//LED CANAL 2
+//LED CANAL 2- LED VERDE O PB6
     TIM_OCInitTypeDef TIM_OCInitStructure;
  	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_Toggle;
  	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
- 	TIM_OCInitStructure.TIM_Pulse = 10000; //tiempo en el que empezara a parpadear(10s)
+ 	TIM_OCInitStructure.TIM_Pulse = 10000; //TIEMPO EN EL QUE EMPEZARA A PARPADEAR(10 SEGUNDOS)
  	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
  	TIM_OC2Init(TIM4, &TIM_OCInitStructure);
  	TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Disable);
-
- 	/* TIM IT enable */
 
  	TIM_ITConfig(TIM4, TIM_IT_Update, ENABLE); //Update Event
  	TIM_ITConfig(TIM4, TIM_IT_CC1 , ENABLE); //IC1 asociado a PA12
