@@ -23,12 +23,12 @@ void  GPIOs_Configuration ()
 
 //CONFIGURACION DEL LED COMO SALIDA-------------------------------
     	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
-    	 GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+    	 GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;	//modo de funcion alterna
     	 GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
     	 GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
     	 GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
     	 GPIO_Init(GPIOB, &GPIO_InitStructure);
-    	 GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_TIM4);
+    	 GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_TIM4);	//configuramos el pin 7 como AF del timer 4
 //-------------------------------------------------------------------
 //CONFIGURAMOS LOS CANALES DEL TIMER ASIGNANCO LOS PUERTOS CITADOS ANTERIORMENTE A LOS CANALES DE ESTE--------------
 
