@@ -47,7 +47,9 @@ void EXTI0_IRQHandler (void){ //CUANDO PULSAMOS USER SALTA A LA SIGUIENTE INTERR
 	if(EXTI_GetFlagStatus(EXTI_Line0)!=0){
 		LCD_GLASS_DisplayString((uint8_t*)" START ");
 		TIM_Cmd(TIM4, ENABLE);	//COMIENZA A CONTAR EL TIMER
-		EXTI_ClearITPendingBit(EXTI_Line0);	// LIMPIAMOS EL FLAG
+		EXTI_ClearITPendingBit(EXTI_Line0);	// LIMPIAMOS EL FLAGç
+		GPIO_WriteBit(GPIOB,GPIO_Pin_7, 0);
+
 	}
 }
 
