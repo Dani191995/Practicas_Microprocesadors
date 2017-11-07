@@ -38,6 +38,7 @@ void Timer_Configuration()	//CONFIGURACION DEL TIMER 4
  TIM_TimeBaseStructure.TIM_ClockDivision = 0;
  TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
  TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
+
  TIM_SelectOutputTrigger( TIM4, TIM_TRGOSource_Update);
 
 
