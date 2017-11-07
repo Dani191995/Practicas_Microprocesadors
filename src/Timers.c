@@ -39,6 +39,8 @@ void Timer_Configuration()	//CONFIGURACION DEL TIMER 4
  TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
  TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
 
+ TIM_SelectOutputTrigger(TIM4, TIM_TRGOSource_OC1);
+
 //CANAL 1 PULSADOR 12
     TIM_ICInitTypeDef TIM_ICInitStructure;
  	TIM_ICInitStructure.TIM_Channel = TIM_Channel_1;
@@ -56,6 +58,11 @@ void Timer_Configuration()	//CONFIGURACION DEL TIMER 4
  	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
  	TIM_OC2Init(TIM4, &TIM_OCInitStructure);
  	TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Disable);
+
+//trgo para el adc
+ 	TIM_TRGOSource_Enable
+
+
 
  	TIM_ITConfig(TIM4, TIM_IT_Update, ENABLE); //Update Event
  	TIM_ITConfig(TIM4, TIM_IT_CC1 , ENABLE); //IC1 asociado a PA12

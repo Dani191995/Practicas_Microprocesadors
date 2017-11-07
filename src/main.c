@@ -28,6 +28,9 @@ int main(void)
 
   Timer_Configuration();
 
+  TIM4_TRGO;
+
+
   while(1){
 
   }	//BUCLE INFINITO A LA ESPERA DE LA INTERRUPCION
