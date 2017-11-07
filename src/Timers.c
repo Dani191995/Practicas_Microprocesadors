@@ -33,8 +33,8 @@ void RCC_Configuration()	//CONFIGURAMOS LOS DIFERENTES RELOJES
 void Timer_Configuration()	//CONFIGURACION DEL TIMER 4
  {
  TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
- TIM_TimeBaseStructure.TIM_Period = 15000; //15000 x 1ms = 15s
- TIM_TimeBaseStructure.TIM_Prescaler = 15999; //15999
+ TIM_TimeBaseStructure.TIM_Period = 62499;
+ TIM_TimeBaseStructure.TIM_Prescaler = 63;
  TIM_TimeBaseStructure.TIM_ClockDivision = 0;
  TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
  TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
