@@ -29,7 +29,6 @@ int main(void)
 
   Timer_Configuration();
 
-  TIM4_TRGO;
 
 
   while(1){

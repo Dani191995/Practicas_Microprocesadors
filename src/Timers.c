@@ -38,29 +38,11 @@ void Timer_Configuration()	//CONFIGURACION DEL TIMER 4
  TIM_TimeBaseStructure.TIM_ClockDivision = 0;
  TIM_TimeBaseStructure.TIM_CounterMode = TIM_CounterMode_Up;
  TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure);
+ TIM_SelectOutputTrigger( TIM4, TIM_TRGOSource_Update);
 
- TIM_SelectOutputTrigger(TIM4, TIM_TRGOSource_OC1);
 
-//CANAL 1 PULSADOR 12
-    TIM_ICInitTypeDef TIM_ICInitStructure;
- 	TIM_ICInitStructure.TIM_Channel = TIM_Channel_1;
- 	TIM_ICInitStructure.TIM_ICPolarity = TIM_ICPolarity_Falling;
- 	TIM_ICInitStructure.TIM_ICSelection = TIM_ICSelection_DirectTI;
- 	TIM_ICInitStructure.TIM_ICPrescaler = TIM_ICPSC_DIV1;
- 	TIM_ICInitStructure.TIM_ICFilter = 0x0;
- 	TIM_ICInit(TIM4, &TIM_ICInitStructure);
-
-//LED CANAL 2- LED VERDE O PB6
-    TIM_OCInitTypeDef TIM_OCInitStructure;
- 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_Toggle;
- 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
- 	TIM_OCInitStructure.TIM_Pulse = 10000; //TIEMPO EN EL QUE EMPEZARA A PARPADEAR(10 SEGUNDOS)
- 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
- 	TIM_OC2Init(TIM4, &TIM_OCInitStructure);
- 	TIM_OC2PreloadConfig(TIM4, TIM_OCPreload_Disable);
 
 //trgo para el adc
- 	TIM_TRGOSource_Enable
 
 
 
