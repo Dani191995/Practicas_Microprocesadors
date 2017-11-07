@@ -43,13 +43,7 @@ void Timer_Configuration()	//CONFIGURACION DEL TIMER 4
 
 
 
-//trgo para el adc
-
-
-
  	TIM_ITConfig(TIM4, TIM_IT_Update, ENABLE); //Update Event
- 	TIM_ITConfig(TIM4, TIM_IT_CC1 , ENABLE); //IC1 asociado a PA12
- 	TIM_ITConfig(TIM4, TIM_IT_CC2 , ENABLE); //OC2 asociado a PB7
  }
 
 void Systick_Configuration()
