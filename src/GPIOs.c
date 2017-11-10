@@ -11,14 +11,7 @@ void  GPIOs_Configuration ()
   GPIO_InitStructure.GPIO_PuPd= GPIO_PuPd_NOPULL;	//NO HACE FALTA RESISTENCIA(INTEGRADA)
   GPIO_InitStructure.GPIO_Speed=GPIO_Speed_2MHz;	//VELOCIDAD
   GPIO_Init(GPIOA, &GPIO_InitStructure);
-//--------------------------------------------------------
-//CONFIGURAMOS EL PIN 12 COMO ENTRADA
-    	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;
-    	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
-    	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-    	GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-    	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
-    	GPIO_Init(GPIOA, &GPIO_InitStructure);
+
 //----------------------------------------------------------
 //CONFIGURAMOS EL PIN A5 COMO ENTRADA
      	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
@@ -37,17 +30,6 @@ void  GPIOs_Configuration ()
     	 GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
     	 GPIO_Init(GPIOB, &GPIO_InitStructure);
     	 GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_TIM4);	//configuramos el pin 7 como AF del timer 4
-//-------------------------------------------------------------------
-//CONFIGURAMOS LOS CANALES DEL TIMER ASIGNANCO LOS PUERTOS CITADOS ANTERIORMENTE A LOS CANALES DE ESTE--------------
-
-//1-Definir puerto 2- Conectarlo al RI 3- conectar el RI al Timer
-  	GPIO_PinAFConfig(GPIOA, GPIO_PinSource12, GPIO_AF_RI);
-// Seleccionamos TIM4 dentro del RI
-  	SYSCFG_RITIMSelect(TIM_Select_TIM4);
-//Input Capture CH1 se mapea hacia RI
-  	SYSCFG_RITIMInputCaptureConfig(RI_InputCapture_IC1, RI_InputCaptureRouting_3);
-//usamos AF para el PB7 (LED verde) que puede ser conectado al CH2 del TIM4
-  	 GPIO_PinAFConfig(GPIOB, GPIO_PinSource7,GPIO_AF_TIM4);
 //-------------------------------------------------------------------------------------------------------------------
 
 //CONFIGURACION DE LA SALIDA POR LA PANTALA LCD

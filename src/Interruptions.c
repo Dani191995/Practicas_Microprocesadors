@@ -24,14 +24,20 @@ void Interruption_Configuration()
 	 	 struct_EXTI.EXTI_Trigger = EXTI_Trigger_Falling;
 	 	 struct_EXTI.EXTI_LineCmd = ENABLE;
 	 	 EXTI_Init(&struct_EXTI);
+
+
+	 NVIC_InitStructure.NVIC_IRQChannel = ADC1_IRQn;
+	 NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+	 NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+	 NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+	 NVIC_Init(&NVIC_InitStructure);
 //------------------------------------------------------------------
 //CONFIGURAMOS LA PRIORIDAD DEL NVIC SOBRE EL PULSADOR USER----------
-	 NVIC_InitTypeDef struct_NVIC;
-	 struct_NVIC.NVIC_IRQChannel = EXTI0_IRQn;
-	 struct_NVIC.NVIC_IRQChannelCmd = ENABLE ;
-	 struct_NVIC.NVIC_IRQChannelPreemptionPriority = 0x0F ;
-	 struct_NVIC.NVIC_IRQChannelSubPriority = 0x0F;
-	 NVIC_Init(&struct_NVIC);
+	 NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn;
+	 NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE ;
+	 NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F ;
+	 NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
+	 NVIC_Init(&NVIC_InitStructure);
 	 SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource0);  // Configuracion para tener una exti en PA0
 //----------------------------------------------------------------
 }

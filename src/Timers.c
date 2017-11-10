@@ -4,13 +4,15 @@
 void RCC_Configuration()	//CONFIGURAMOS LOS DIFERENTES RELOJES
 {
   /* Enable the GPIOs Clock */
-  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC| RCC_AHBPeriph_GPIOD| RCC_AHBPeriph_GPIOE| RCC_AHBPeriph_GPIOH, ENABLE);
+  RCC_AHBPeriphClockCmd(RCC_AHBPeriph_GPIOA | RCC_AHBPeriph_GPIOB | RCC_AHBPeriph_GPIOC| RCC_AHBPeriph_GPIOD, ENABLE);
 
   /* Enable comparator clock */
   RCC_APB1PeriphClockCmd(RCC_APB1Periph_COMP | RCC_APB1Periph_LCD | RCC_APB1Periph_PWR,ENABLE);
 
   /* Enable SYSCFG */
   RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG , ENABLE);
+
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
 
   /* Allow access to the RTC */
   PWR_RTCAccessCmd(ENABLE);
@@ -32,6 +34,7 @@ void RCC_Configuration()	//CONFIGURAMOS LOS DIFERENTES RELOJES
 
 void Timer_Configuration()	//CONFIGURACION DEL TIMER 4
  {
+	//configuracion para que el timer cuente a 4Hz
  TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
  TIM_TimeBaseStructure.TIM_Period = 62499;
  TIM_TimeBaseStructure.TIM_Prescaler = 63;
