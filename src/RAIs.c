@@ -27,7 +27,6 @@ void TIM4_IRQHandler()
 //CUANDO LLEGA AL FINAL DE LA CUENTA ENTRA EN AL INTERRUPCION
 	 if (TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)	//EN EL CASO DE QUE LLEGUE A 15S SALTA LA SIGUIENTE INTERRUPCION
 		 {
-			 LCD_GLASS_DisplayString((uint8_t*)"FIN T");
 			 TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
 			 TIM_Cmd(TIM4, DISABLE);		//desactivamos el timer, a la espera de que se pulse PA0
 			 GPIO_ToggleBits(GPIOB,GPIO_Pin_7);
