@@ -13,7 +13,7 @@ void  GPIOs_Configuration ()
   GPIO_Init(GPIOA, &GPIO_InitStructure);
 
 //----------------------------------------------------------
-//CONFIGURAMOS EL PIN A5 COMO ENTRADA
+//CONFIGURAMOS EL PIN A5 COMO ENTRADA analogica
      	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
      	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
      	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
@@ -24,13 +24,21 @@ void  GPIOs_Configuration ()
 
 //CONFIGURACION DEL LED COMO SALIDA-------------------------------
     	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
-    	 GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;	//modo de funcion alterna
+    	 GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
     	 GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
     	 GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
     	 GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
     	 GPIO_Init(GPIOB, &GPIO_InitStructure);
-    	 GPIO_PinAFConfig(GPIOB, GPIO_PinSource7, GPIO_AF_TIM4);	//configuramos el pin 7 como AF del timer 4
 //-------------------------------------------------------------------------------------------------------------------
+
+ //CONFIGURACION DEL LED COMO SALIDA-------------------------------
+	 GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+	 GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
+	 GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+	 GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+	 GPIO_InitStructure.GPIO_Speed = GPIO_Speed_40MHz;
+	 GPIO_Init(GPIOB, &GPIO_InitStructure);
+ //-------------------------------------------------------------------------------------------------------------------
 
 //CONFIGURACION DE LA SALIDA POR LA PANTALA LCD
 

@@ -38,7 +38,6 @@ void Interruption_Configuration()
 	 NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x0F ;
 	 NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x0F;
 	 NVIC_Init(&NVIC_InitStructure);
-	 SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource0);  // Configuracion para tener una exti en PA0
 //----------------------------------------------------------------
 }
 

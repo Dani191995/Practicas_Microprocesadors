@@ -10,6 +10,11 @@ void ADC1_IRQHandler(void)
 			conv = ADC_GetConversionValue(ADC1);
 			DisplayConversionOnLCD(conv);
 		}
+	if (ADC_GetITStatus(ADC1, ADC_IT_AWD) != RESET)
+	{
+		ADC_ClearITPendingBit(ADC1, ADC_IT_AWD);
+		GPIO_WriteBit(GPIOB, GPIO_Pin_6, ENABLE);
+	}
 }
 
 
@@ -20,8 +25,6 @@ void TIM4_IRQHandler()
 	 {
 		inicio = FALSE;
 		TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
-		TIM_ClearITPendingBit(TIM4, TIM_IT_CC1 );
-		TIM_ClearITPendingBit( TIM4, TIM_IT_CC2);
 	 }
 
 //CUANDO LLEGA AL FINAL DE LA CUENTA ENTRA EN AL INTERRUPCION
