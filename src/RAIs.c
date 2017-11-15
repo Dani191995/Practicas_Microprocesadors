@@ -7,13 +7,15 @@ void ADC1_IRQHandler(void)
 	if (ADC_GetITStatus(ADC1, ADC_IT_EOC) != RESET)
 		{
 			ADC_ClearITPendingBit(ADC1, ADC_IT_EOC);
+			ADC_ClearITPendingBit(ADC1, ADC_IT_AWD);
 			conv = ADC_GetConversionValue(ADC1);
 			DisplayConversionOnLCD(conv);
 		}
 	if (ADC_GetITStatus(ADC1, ADC_IT_AWD) != RESET)
 	{
 		ADC_ClearITPendingBit(ADC1, ADC_IT_AWD);
-		GPIO_WriteBit(GPIOB, GPIO_Pin_6, ENABLE);
+		ADC_ClearITPendingBit(ADC1, ADC_IT_EOC);
+		GPIO_WriteBit(GPIOB, GPIO_Pin_7, DISABLE);
 	}
 }
 
@@ -31,8 +33,7 @@ void TIM4_IRQHandler()
 	 if (TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)	//EN EL CASO DE QUE LLEGUE A 15S SALTA LA SIGUIENTE INTERRUPCION
 		 {
 			 TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
-			 TIM_Cmd(TIM4, DISABLE);		//desactivamos el timer, a la espera de que se pulse PA0
-			 GPIO_ToggleBits(GPIOB,GPIO_Pin_7);
+			 GPIO_ToggleBits(GPIOB,GPIO_Pin_6);
 		 }
 
 }
@@ -42,6 +43,7 @@ void EXTI0_IRQHandler (void){ //CUANDO PULSAMOS USER SALTA A LA SIGUIENTE INTERR
 	if(EXTI_GetFlagStatus(EXTI_Line0)!=0){
 		LCD_GLASS_DisplayString((uint8_t*)" START ");
 		TIM_Cmd(TIM4, ENABLE);	//COMIENZA A CONTAR EL TIMER
+		ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
 		GPIO_WriteBit(GPIOB,GPIO_Pin_7, 1);
 		EXTI_ClearITPendingBit(EXTI_Line0);	// LIMPIAMOS EL FLAG
 	}
@@ -53,8 +55,12 @@ void DisplayConversionOnLCD(uint16_t conversion)	//FUNCION PARA MOSTRAR POR PANT
 	sprintf(&cad, "%u", conversion);
 
 	LCD_GLASS_Clear();
-	LCD_GLASS_DisplayString((uint8_t) cad);
+	//LCD_GLASS_DisplayString((uint8_t) cad);
 	LCD_GLASS_WriteChar((uint8_t*) cad, 1, 0, 1);
+	LCD_GLASS_WriteChar((uint8_t*) cad, 0, 0, 2);
+	LCD_GLASS_WriteChar((uint8_t*) cad, 0, 0, 3);
+
+	GPIO_ToggleBits(GPIOB,GPIO_Pin_6);
 }
 
 

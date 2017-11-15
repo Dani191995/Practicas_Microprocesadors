@@ -16,16 +16,16 @@ void ADC_configuration()
 
 	ADC_Init(ADC1,&ADC_struct);
 
-	/*
+
 	  ADC_AnalogWatchdogSingleChannelConfig(ADC1, ADC_Channel_5);
 	  ADC_AnalogWatchdogThresholdsConfig(ADC1, (2450*4095)/3300, (650*4095)/3300);
 	  ADC_AnalogWatchdogCmd(ADC1, ADC_AnalogWatchdog_SingleRegEnable);
 
-	  */
+
 
 	ADC_RegularChannelConfig(ADC1, ADC_Channel_5, 1, ADC_SampleTime_192Cycles);
 
-	ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
+	//ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
 
 	ADC_Cmd(ADC1, ENABLE);  //COMIENZA EL ADC
 
