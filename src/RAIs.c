@@ -52,15 +52,19 @@ void EXTI0_IRQHandler (void){ //CUANDO PULSAMOS USER SALTA A LA SIGUIENTE INTERR
 void DisplayConversionOnLCD(uint16_t conversion)	//FUNCION PARA MOSTRAR POR PANTALLA EL TIEMPO QUE HA TRANSCURRIDO CUANDO PULSAMOS EL BOTON 12
 {
 	char cad[]="";
-	sprintf(&cad, "%u", conversion);
+	uint16_t unidades, decimales;
+	unidades= conversion/1000;
+	decimales = conversion%1000;
+	sprintf(&cad, "%uD%u", unidades, decimales);
 
 	LCD_GLASS_Clear();
-	//LCD_GLASS_DisplayString((uint8_t) cad);
-	LCD_GLASS_WriteChar((uint8_t*) cad, 1, 0, 1);
+	LCD_GLASS_DisplayStrDeci((uint16_t*) cad);
+//	LCD_GLASS_DisplayString((uint8_t) cad);
+/*	LCD_GLASS_WriteChar((uint8_t*) cad, 1, 0, 1);
 	LCD_GLASS_WriteChar((uint8_t*) cad, 0, 0, 2);
 	LCD_GLASS_WriteChar((uint8_t*) cad, 0, 0, 3);
+*/
 
-	GPIO_ToggleBits(GPIOB,GPIO_Pin_6);
 }
 
 
