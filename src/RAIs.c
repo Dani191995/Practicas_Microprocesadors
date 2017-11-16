@@ -3,11 +3,12 @@
 
 void ADC1_IRQHandler(void)
 {
-	uint16_t conv;
+	float conv;
 	if (ADC_GetITStatus(ADC1, ADC_IT_EOC) != RESET)
 		{
 			ADC_ClearITPendingBit(ADC1, ADC_IT_EOC);
 			ADC_ClearITPendingBit(ADC1, ADC_IT_AWD);
+			GPIO_ToggleBits(GPIOB,GPIO_Pin_6);
 			conv = ADC_GetConversionValue(ADC1);
 			DisplayConversionOnLCD(conv);
 		}
@@ -15,7 +16,9 @@ void ADC1_IRQHandler(void)
 	{
 		ADC_ClearITPendingBit(ADC1, ADC_IT_AWD);
 		ADC_ClearITPendingBit(ADC1, ADC_IT_EOC);
-		GPIO_WriteBit(GPIOB, GPIO_Pin_7, DISABLE);
+		LCD_GLASS_Clear();
+		LCD_GLASS_DisplayString((uint8_t*)" ERROR");
+		GPIO_ResetBits(GPIOB, GPIO_Pin_7);
 	}
 }
 
@@ -33,7 +36,6 @@ void TIM4_IRQHandler()
 	 if (TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)	//EN EL CASO DE QUE LLEGUE A 15S SALTA LA SIGUIENTE INTERRUPCION
 		 {
 			 TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
-			 GPIO_ToggleBits(GPIOB,GPIO_Pin_6);
 		 }
 
 }
@@ -42,29 +44,34 @@ void EXTI0_IRQHandler (void){ //CUANDO PULSAMOS USER SALTA A LA SIGUIENTE INTERR
 
 	if(EXTI_GetFlagStatus(EXTI_Line0)!=0){
 		LCD_GLASS_DisplayString((uint8_t*)" START ");
-		TIM_Cmd(TIM4, ENABLE);	//COMIENZA A CONTAR EL TIMER
 		ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
+		ADC_ITConfig(ADC1,ADC_IT_AWD,ENABLE);
+		TIM_Cmd(TIM4, ENABLE);	//COMIENZA A CONTAR EL TIMER
 		GPIO_WriteBit(GPIOB,GPIO_Pin_7, 1);
 		EXTI_ClearITPendingBit(EXTI_Line0);	// LIMPIAMOS EL FLAG
 	}
 }
 
-void DisplayConversionOnLCD(uint16_t conversion)	//FUNCION PARA MOSTRAR POR PANTALLA EL TIEMPO QUE HA TRANSCURRIDO CUANDO PULSAMOS EL BOTON 12
+void DisplayConversionOnLCD(float conversion)	//FUNCION PARA MOSTRAR POR PANTALLA EL TIEMPO QUE HA TRANSCURRIDO CUANDO PULSAMOS EL BOTON 12
 {
 	char cad[]="";
-	uint16_t unidades, decimales;
-	unidades= conversion/1000;
-	decimales = conversion%1000;
-	sprintf(&cad, "%uD%u", unidades, decimales);
+	unsigned char entero;
+	int decimal;
 
-	LCD_GLASS_Clear();
-	LCD_GLASS_DisplayStrDeci((uint16_t*) cad);
-//	LCD_GLASS_DisplayString((uint8_t) cad);
-/*	LCD_GLASS_WriteChar((uint8_t*) cad, 1, 0, 1);
-	LCD_GLASS_WriteChar((uint8_t*) cad, 0, 0, 2);
-	LCD_GLASS_WriteChar((uint8_t*) cad, 0, 0, 3);
-*/
+	conversion=(conversion*3)/4095;
+	//conversion=conversion*1000;
 
-}
+	entero=conversion;
+	decimal=(int)(conversion*1000)%1000;
+	// convetimos los integer en char
+		 sprintf(&cad,"%u%u",entero,decimal);
+		 LCD_GLASS_Clear();
+		 LCD_GLASS_DisplayString((uint8_t*) &cad);
+	// mostramos por pantalla el tiempo
+		 LCD_GLASS_WriteChar((uint8_t*) &cad[0], 1, FALSE, 1);
+
+	}
+
+
 
 

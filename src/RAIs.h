@@ -12,6 +12,6 @@ void ADC1_IRQHandler(void);
 uint16_t conversion;
 void EXTI0_IRQHandler(void);
 void TIM4_IRQHandler(void);
-void DisplayConversionOnLCD(uint16_t conversion);
+void DisplayConversionOnLCD(float conversion);
 
 #endif /* RAIS_H_ */
