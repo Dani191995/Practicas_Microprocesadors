@@ -35,7 +35,8 @@ int main(void)
   while(1)
   {
 	  GPIO_WriteBit(GPIOB, GPIO_Pin_6, ENABLE);
-	  Delay(500);
+	  Delay(1500);
+	  GPIO_WriteBit(GPIOB, GPIO_Pin_7, ENABLE);
   }	//BUCLE INFINITO A LA ESPERA DE LA INTERRUPCION
 
   return 0;
